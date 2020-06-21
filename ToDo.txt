@@ -1,0 +1,10 @@
+
+Kalendarze + time sloty
+
+- requestowany time slot zawiera docelowy
+- desciption kalendarza (parzwdziwie imię i nazwisko, numer stolika)
+- nie wchodzą rezerwacje w przeszłości
+
+
+Client/User
+

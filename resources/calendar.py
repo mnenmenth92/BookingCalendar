@@ -41,4 +41,4 @@ class Calendar(Resource):
 
 class CalendarList(Resource):
     def get(self):
-        return {'calendar': [calendar.json() for calendar in CalendarModel.query.all()]}
+        return {'calendars': [calendar.json() for calendar in CalendarModel.query.all()]}

@@ -23,6 +23,11 @@ class TimeSlot(Resource):
                         required=True,
                         help="This field cannot be left blank"
                         )
+    parser.add_argument('description',
+                        type=str,
+                        required=False,
+                        help="Description is optional"
+                        )
     # CLASS methods
     def __init__(self):
         self.last_selected_slot_id = 0  # ostatnio wybrany obiekt
@@ -32,12 +37,15 @@ class TimeSlot(Resource):
 
     def post(self):
         data = TimeSlot.parser.parse_args()
-        if self.check_time_slot_available(data['time_started'], data['duration']):
+        try:
+            slot_available = self.check_time_slot_available(data['time_started'], data['duration'])
+        except:
+            return {'message': 'wrong data parsing'}
+        if slot_available:
             time_slot = TimeSlotModel(**data)
             time_slot.save_to_db()
             return{'message': 'time slot saved'}
         return{'message': 'slot already booked'}
-        pass
 
     def put(self,):
         # put last selected time slot
@@ -47,6 +55,7 @@ class TimeSlot(Resource):
             if self.check_time_slot_available(data['time_started'], data['duration']):
                 time_slot.time_started = data['time_started']
                 time_slot.duration = data['duration']
+                time_slot.duration = data['description']
                 time_slot.save_to_db()
                 return {'message': 'time slot updated'}
             return {'message': 'new time slot not available'}
@@ -63,10 +72,12 @@ class TimeSlot(Resource):
     # OTHER METHODS
 
     def check_time_slot_available(self, start, duration):
+        print(start)
+        print(duration)
         for time_slot in TimeSlotModel.query.all():
             if time_slot.check_conflict(start, duration):
-                return {'available': False}
-        return {'available': True}
+                return False
+        return True
 
 
 
