@@ -87,6 +87,6 @@ class TimeSlotsList(Resource):
         time_slots_list = []
         for time_slot in TimeSlotModel.query.all():
             if time_slot.calendar_id == calendar_id:
-                time_slots_list.append(time_slot)
+                time_slots_list.append(time_slot.json())
         return {'time_slots': time_slots_list}
 

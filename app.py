@@ -21,7 +21,7 @@ api.add_resource(CalendarList, '/calendars')
 api.add_resource(Client, '/client/<string:name>')
 api.add_resource(ClientList, '/client')
 api.add_resource(TimeSlot, '/time_slot')
-api.add_resource(TimeSlotsList, '/time_slots_list/<int:id>')
+api.add_resource(TimeSlotsList, '/time_slots_list/<int:calendar_id>')
 
 
 if __name__ == '__main__':
