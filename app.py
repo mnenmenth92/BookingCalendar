@@ -19,8 +19,8 @@ def create_tables():
 api.add_resource(Calendar, '/calendar/<string:name>')
 api.add_resource(CalendarList, '/calendars')
 api.add_resource(Client, '/client/<string:name>')
-api.add_resource(ClientList, '/client')
-api.add_resource(TimeSlot, '/time_slot')
+api.add_resource(ClientList, '/clients')
+api.add_resource(TimeSlot, '/time_slot', '/time_slot/<int:time_slot_id>')
 api.add_resource(TimeSlotsList, '/time_slots_list/<int:calendar_id>')
 
 

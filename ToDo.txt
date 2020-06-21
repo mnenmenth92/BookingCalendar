@@ -4,7 +4,8 @@ Kalendarze + time sloty
 - requestowany time slot zawiera docelowy
 - desciption kalendarza (parzwdziwie imię i nazwisko, numer stolika)
 - nie wchodzą rezerwacje w przeszłości
-
+- put timeslot/id - jak sprawdza czy slot jest dostępny to niech nie bierze siebie pod uwagę
+- lista błędów
 
 Client/User
 

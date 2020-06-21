@@ -52,7 +52,7 @@ class TimeSlotModel(db.Model):
         self.duration = duration
 
     def json(self):
-        return {'calendar_id:': self.calendar_id,
+        return {'calendar_id': self.calendar_id,
                 'time_started': self.time_started,
                 'duration': self.duration,
                 'description': self.description
