@@ -1,6 +1,7 @@
 
 from flask_restful import Resource, reqparse
 from models.time_slot import TimeSlotModel
+from models.calendar import CalendarModel
 
 
 
@@ -37,15 +38,17 @@ class TimeSlot(Resource):
 
     def post(self):
         data = TimeSlot.parser.parse_args()
-        try:
-            slot_available = self.check_time_slot_available(data['time_started'], data['duration'], data['calendar_id'])
-        except:
-            return {'message': 'wrong data parsing'}
-        if slot_available:
-            time_slot = TimeSlotModel(**data)
-            time_slot.save_to_db()
-            return{'message': 'time slot saved'}
-        return{'message': 'slot already booked'}
+        if CalendarModel.find_by_id(data['calendar_id']):
+            try:
+                slot_available = self.check_time_slot_available(data['time_started'], data['duration'], data['calendar_id'])
+            except:
+                return {'message': 'wrong data parsing'}
+            if slot_available:
+                time_slot = TimeSlotModel(**data)
+                time_slot.save_to_db()
+                return{'message': 'time slot saved'}
+            return{'message': 'slot already booked'}
+        return {'message': 'calendar with id: {} not found'.format(data['calendar_id'])}
 
     def put(self,):
         # put last selected time slot

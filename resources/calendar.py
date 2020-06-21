@@ -32,7 +32,8 @@ class Calendar(Resource):
         pass
 
     def delete(self, name):
-        if CalendarModel.find_by_name(name):
+        calendar = CalendarModel.find_by_name(name)
+        if calendar:
             calendar.delete_from_db()
             return {'message': 'Item deleted'}
         return {'message': 'No such item'}
