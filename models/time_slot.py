@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from config import time_format
 
-# ToDo dodać opis do klasy i bazy
+
 
 
 class TimeSlotModel(db.Model):
@@ -24,12 +24,14 @@ class TimeSlotModel(db.Model):
         self.duration = duration  # minutes
         self.description = description
 
-    def check_conflict(self, start, duration):
+    def check_conflict(self, start, duration, calendar_id):
         # check if input is in conflict with time slot
         time_started = self.string_to_time(start)
         time_ended = time_started + timedelta(minutes=duration)
-        return (self.check_if_time_between(time_started) or self.check_if_time_between(time_ended) or
-                self.get_start_time() > time_started and self.get_end_time() < time_ended)
+        # cenflict boolean sentence:
+        time_clonflicted = (self.check_if_time_between(time_started) or self.check_if_time_between(time_ended)
+                            or self.get_start_time() > time_started and self.get_end_time() < time_ended)
+        return calendar_id == self.calendar_id and time_clonflicted
 
     def string_to_time(self, string_time):
         return datetime.strptime(string_time, time_format)

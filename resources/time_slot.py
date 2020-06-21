@@ -9,7 +9,7 @@ class TimeSlot(Resource):
 
     parser = reqparse.RequestParser()
     parser.add_argument('calendar_id',
-                        type=str,
+                        type=int,
                         required=True,
                         help="This field cannot be left blank"
                         )
@@ -38,7 +38,7 @@ class TimeSlot(Resource):
     def post(self):
         data = TimeSlot.parser.parse_args()
         try:
-            slot_available = self.check_time_slot_available(data['time_started'], data['duration'])
+            slot_available = self.check_time_slot_available(data['time_started'], data['duration'], data['calendar_id'])
         except:
             return {'message': 'wrong data parsing'}
         if slot_available:
@@ -71,11 +71,9 @@ class TimeSlot(Resource):
 
     # OTHER METHODS
 
-    def check_time_slot_available(self, start, duration):
-        print(start)
-        print(duration)
+    def check_time_slot_available(self, start, duration, calendar_id):
         for time_slot in TimeSlotModel.query.all():
-            if time_slot.check_conflict(start, duration):
+            if time_slot.check_conflict(start, duration, calendar_id):
                 return False
         return True
 
