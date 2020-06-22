@@ -7,12 +7,14 @@ class Client(Resource):
 
     # REQUESTS
 
-    def post(self, name):
+
+
+    def post(self):
+        # ToDo zebrac dane na poczatku, zobaczyc jak ogarnac parser z usera.
         if ClientModel.find_by_name(name):
             return {'message': "The client with name'{}'already exists".format(name)}, 400
 
-        data = client.parser.parse_args()
-        client = ClientModel(name, data['client_id'])
+        client = ClientModel(name)
         try:
             client.save_to_db()
         except:
@@ -21,7 +23,8 @@ class Client(Resource):
         return client.json(), 201
 
     def delete(self, name):
-        if ClientModel.find_by_name(name):
+        client = ClientModel.find_by_name(name)
+        if client:
             client.delete_from_db()
             return {'message': 'Item deleted'}
         return {'message': 'No such item'}
