@@ -14,4 +14,4 @@ class ClientModel(UserModel):
 
 
     def json(self):
-        return {'username:': super.username, 'calendars': [calendars.json() for calendars in self.calendars.all()]}
+        return {'username:': self.username, 'calendars': [calendars.json() for calendars in self.calendars.all()]}

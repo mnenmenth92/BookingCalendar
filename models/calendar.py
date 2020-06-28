@@ -8,12 +8,13 @@ class CalendarModel(db.Model):
 
     time_slots = db.relationship('TimeSlotModel', lazy='dynamic')
 
-    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+    clients_id = db.Column(db.Integer, db.ForeignKey('client.id'))
     client = db.relationship('ClientModel')
 
-    def __init__(self, name, client_id):
+    def __init__(self, name, clients_id):
         self.name = name
-        self.client_it = client_id
+        self.clients_it = clients_id
+
 
 
     def json(self):

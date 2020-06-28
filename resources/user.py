@@ -46,4 +46,4 @@ class User(Resource):
 
 class UserList(Resource):
     def get(self):
-        return {'users': [calendar.json() for calendar in CalendarModel.query.all()]}
+        return {'users': [user.json() for user in UserModel.query.all()]}
