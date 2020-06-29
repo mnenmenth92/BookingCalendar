@@ -13,7 +13,7 @@ class CalendarModel(db.Model):
 
     def __init__(self, name, clients_id):
         self.name = name
-        self.clients_it = clients_id
+        self.clients_id = clients_id
 
 
 
