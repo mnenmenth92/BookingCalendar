@@ -1,6 +1,7 @@
 from db import db
 from models.user import UserModel
 
+# client owns calendars
 class ClientModel(UserModel):
     __tablename__ = 'client'
     id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
