@@ -12,14 +12,10 @@ class CalendarModel(db.Model):
     client = db.relationship('ClientModel')
 
     def __init__(self, name, clients_id):
-        self.id = -1
         self.name = name
         self.clients_id = clients_id
 
-
-
     def json(self):
-        print('calendars id: {}'.format(self.id))
         return {'name:': self.name, 'calendar id': self.id, 'time_slots': [time_slot.json() for time_slot in self.time_slots.all()]}
 
     @classmethod
