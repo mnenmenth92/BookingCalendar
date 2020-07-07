@@ -6,7 +6,7 @@ from models.user import UserModel
 class AdminModel(UserModel):
     __tablename__ = 'admin'
     id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
-
+    # inherited from user
     __mapper_args__ = {
         'polymorphic_identity': 'user',
     }

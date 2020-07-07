@@ -12,9 +12,10 @@ class Calendar(Resource):
                         help="Every item needs a store id."
                         )
 
-    # REQUESTS
-
+    # post calendar to database
     def post(self, name):
+        # if requested calendar do n ot already exist
+        # save it to database
         if CalendarModel.find_by_name(name):
             return{'message': "The calendar with name'{}'already exists".format(name)}, 400
 
@@ -27,10 +28,7 @@ class Calendar(Resource):
 
         return calendar.json(), 201
 
-    def get(self, name):
-        # needed?
-        pass
-
+    # delete calendar from database
     def delete(self, name):
         calendar = CalendarModel.find_by_name(name)
         if calendar:
@@ -39,7 +37,7 @@ class Calendar(Resource):
         return {'message': 'No such item'}
 
 
-
 class CalendarList(Resource):
+    # returns calendar list json
     def get(self):
         return {'calendars': [calendar.json() for calendar in CalendarModel.query.all()]}

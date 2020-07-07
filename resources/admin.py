@@ -5,7 +5,7 @@ from resources.user import User
 
 
 class Admin(User):
-
+    # post admin - save it to database
     def post(self):
         data = User.parser.parse_args()
         if AdminModel.find_by_name(data['username']):
@@ -24,5 +24,6 @@ class Admin(User):
 
 
 class AdminList(Resource):
+    # returns list of admins in json format
     def get(self):
         return {'admins': [admin.json() for admin in AdminModel.query.all()]}
