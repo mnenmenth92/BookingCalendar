@@ -1,4 +1,8 @@
+# requests string format
 time_format = "%Y%m%d_%H%M%S"
+
+# ToDo replace fixed strings with following
+# strings used for request responses
 front_end_messages = {
     'element_saved': {'message': 'Element saved'},
     'element_deleted': {'message': 'Element deleted'},

@@ -5,7 +5,7 @@ from models.calendar import CalendarModel
 
 
 
-
+# resource for TimeSlotModel
 class TimeSlot(Resource):
 
     parser = reqparse.RequestParser()
@@ -30,11 +30,11 @@ class TimeSlot(Resource):
                         help="Description is optional"
                         )
 
-
-    # REQUESTS
-
+    # saves time slot to database
     def post(self):
         data = TimeSlot.parser.parse_args()
+        # if selected calendar found and time slot is available
+        # create time slot and save it to data base
         if CalendarModel.find_by_id(data['calendar_id']):
             try:
                 slot_available = self.check_time_slot_available(data['time_started'], data['duration'], data['calendar_id'])
@@ -48,8 +48,8 @@ class TimeSlot(Resource):
             return{'message': 'slot already booked'}
         return {'message': 'calendar with id: {} not found'.format(data['calendar_id'])}
 
+    # put last selected time slot
     def put(self, time_slot_id):
-        # put last selected time slot
         time_slot = TimeSlotModel.find_by_id(time_slot_id)
         if time_slot:                                           # if current time slot found
             data = TimeSlot.parser.parse_args()                 # get data
@@ -60,23 +60,21 @@ class TimeSlot(Resource):
                     print(e)
                     return {'message': 'wrong data parsing'}
                 if slot_available:                              # and slot is available update time slot
-                    # ToDo - poprawić do jednej linijki
-                    time_slot.time_started = data['calendar_id']
+                    time_slot.calendar_id = data['calendar_id']
                     time_slot.time_started = data['time_started']
                     time_slot.duration = data['duration']
-                    time_slot.duration = data['description']
+                    time_slot.description = data['description']
                     time_slot.save_to_db()
                     return {'message': 'time slot updated'}
                 return {'message': 'new time slot not available'}
             return {'message': 'time slot not found'}
         return {'message': 'calendar with id: {} not found'.format(data['calendar_id'])}
 
+    # get time slot from database
     def get(self):
         data = TimeSlot.parser.parse_args()
         selected_slot_id = TimeSlotModel.get_slot_id(data['calendar_id'], data['time_started'])
         return {'time_slot_id': selected_slot_id}
-
-    # OTHER METHODS
 
     def check_time_slot_available(self, start, duration, calendar_id, slot_id=-1):
         # slot_id nie potrzebny przy post, potrzebny przy put
@@ -87,11 +85,10 @@ class TimeSlot(Resource):
         return True
 
 
-
+# Time slots list
 class TimeSlotsList(Resource):
 
-    # REQUESTS
-
+    # get list of slots
     def get(self, calendar_id):
         time_slots_list = []
         for time_slot in TimeSlotModel.query.all():

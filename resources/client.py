@@ -6,7 +6,7 @@ from resources.user import User
 
 class Client(User):
 
-
+    # post client - save it to database
     def post(self):
         data = User.parser.parse_args()
         if ClientModel.find_by_name(data['username']):
@@ -25,5 +25,6 @@ class Client(User):
 
 
 class ClientList(Resource):
+    # returns list of clients json
     def get(self):
         return {'client': [client.json() for client in ClientModel.query.all()]}
