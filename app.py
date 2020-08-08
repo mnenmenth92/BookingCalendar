@@ -6,6 +6,7 @@ from resources.time_slot import TimeSlot, TimeSlotsList
 from resources.client import Client, ClientList
 from resources.user import User, UserList
 from resources.admin import Admin, AdminList
+from resources.main_page import MainPage
 
 # set flask webserver
 app = Flask(__name__)
@@ -21,6 +22,7 @@ def create_tables():
     db.create_all()
 
 # resources:
+api.add_resource(MainPage, '/')
 api.add_resource(Calendar, '/calendar/<string:name>')
 api.add_resource(CalendarList, '/calendars')
 api.add_resource(Client, '/client')
