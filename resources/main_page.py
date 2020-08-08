@@ -6,4 +6,4 @@ class MainPage(Resource):
 
     # return index.html
     def get(self):
-        return make_response(render_template('build/index.html', 200))
+        return make_response(render_template('index.html'))
