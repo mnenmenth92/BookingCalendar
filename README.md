@@ -16,13 +16,17 @@ To start project you have:
 ```
 pip install -U Flask
 ```
-- Flask-SQLAlchemy
+- install Flask-SQLAlchemy
 ```
 pip install -U Flask-SQLAlchemy
 ```
-- Flask-JWT
+- install Flask-JWT
 ```
 pip install -U Flask-JWT
+```
+- install Fask-restull
+```
+pip install flask-restful
 ```
 - clone project to directory next to virtual environment
 - run app.py
